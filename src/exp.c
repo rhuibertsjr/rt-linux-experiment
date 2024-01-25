@@ -13,12 +13,24 @@
 // rhjr:
 
 global uint32_t gpio_irq_pin;
+global uint8_t gpio_irq_state;
 
 internal irq_handler_t 
 exp_interrupt_service_routine(uint32_t irq, void* dev_id, struct pt_regs *regs)
 {
   LOG("Interrupt");
-  gpio_set_value(GPIO_24, 1);
+
+  if (gpio_irq_state)
+  {
+    gpio_set_value(GPIO_24, 0);
+    gpio_irq_state = 0;
+  }
+  else
+  {
+    gpio_set_value(GPIO_24, 1);
+    gpio_irq_state = 1;
+  }
+
   return (irq_handler_t) IRQ_HANDLED;  
 }
 
@@ -44,10 +56,13 @@ exp_gpio_initialize(void)
 
   // rhjr: interrupt service routine
   uint8_t result; // rhjr: ISO C90 actually forbids mixing declerations and code lol.
+  gpio_irq_state = 0;
 
   gpio_irq_pin = gpio_to_irq(GPIO_23);
-  result = request_irq(gpio_irq_pin, (irq_handler_t) exp_interrupt_service_routine, 
-    IRQF_TRIGGER_RISING, STRINGIFY(exp_interrupt_service_routine), NULL);
+  result = request_irq(
+    gpio_irq_pin, (irq_handler_t) exp_interrupt_service_routine, 
+    IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING, 
+    STRINGIFY(exp_interrupt_service_routine), NULL);
 
   return result;
 }
