@@ -44,7 +44,7 @@ exp_gpio_initialize(void)
   // rhjr: request pin 23, and set it as input.
   gpio_request(GPIO_23, "GPIO_23");
   gpio_direction_input(GPIO_23);  
-  gpio_set_debounce(GPIO_23, 20);
+  gpio_set_debounce(GPIO_23, 200);
 
   // rhjr: request pin 24, and set it as input.
   gpio_request(GPIO_24, "GPIO_24");
