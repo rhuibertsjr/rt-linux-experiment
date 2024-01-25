@@ -45,7 +45,7 @@ exp_gpio_initialize(void)
   // rhjr: interrupt service routine
   uint8_t result; // rhjr: ISO C90 actually forbids mixing declerations and code lol.
 
-  gpio_to_irq(GPIO_23);
+  gpio_irq_pin = gpio_to_irq(GPIO_23);
   result = request_irq(gpio_irq_pin, (irq_handler_t) exp_interrupt_service_routine, 
     IRQF_TRIGGER_RISING, STRINGIFY(exp_interrupt_service_routine), NULL);
 
