@@ -1,6 +1,12 @@
+build
 build/exp
 
-./src/exp.mod
-./src/.exp.mod.cmd
-./src/.exp.o.cmd
+src/.exp.ko.cmd
+src/exp.ko
+src/.exp.mod
+src/.exp.mod.cmd
+src/.exp.o.cmd
+src/.exp.mod.o.cmd
+src/exp.mod
+src/exp.mod.c
 *.o
