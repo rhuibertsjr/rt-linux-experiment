@@ -1,1 +1,6 @@
-build/
+build/exp
+
+./src/exp.mod
+./src/.exp.mod.cmd
+./src/.exp.o.cmd
+*.o
