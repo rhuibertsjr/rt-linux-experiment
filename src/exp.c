@@ -5,12 +5,16 @@
 ///
 /// rhjr: 
 ///
-///
+//
 
 #include <linux/interrupt.h>
+#include <linux/ktime.h>
+#include <linux/delay.h>
 #include "exp.h"
 
 // rhjr:
+
+global ktime_t start_time, end_time;
 
 global uint32_t gpio_irq_pin;
 global uint8_t gpio_irq_state;
@@ -44,7 +48,7 @@ exp_gpio_initialize(void)
   // rhjr: request pin 23, and set it as input.
   gpio_request(GPIO_23, "GPIO_23");
   gpio_direction_input(GPIO_23);  
-  gpio_set_debounce(GPIO_23, 200);
+  gpio_set_debounce(GPIO_23, 20);
 
   // rhjr: request pin 24, and set it as input.
   gpio_request(GPIO_24, "GPIO_24");
@@ -75,6 +79,16 @@ exp_initialize(void)
   LOG("Initializing the experiment.");
 
   exp_gpio_initialize();
+
+  start_time = ktime_get();
+
+  msleep(1000);
+
+  end_time = ktime_get();
+
+  // rhjr: convert time difference to milliseconds.
+  delta_time_ns = ktime_to_ns(ktime_sub(end_time, start_tim))
+  delta_time_ms = div_s64(delta_time_ns, 1000000);
 
   return 0;
 }
