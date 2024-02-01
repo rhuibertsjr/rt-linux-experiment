@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo cyclictest --mlockall -smp --priority=80 --interval=200 --distance=0 --loops=100000
+sudo cyclictest -l10000000 -m -S -p90 -i200 -h400 -q > output.txt
