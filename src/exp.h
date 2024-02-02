@@ -24,7 +24,7 @@
 #define STATEMENT(x) do { x } while(0) /* MACRO-expansion fix */
 
 #define LOG(msg) STATEMENT( \
-  pr_debug("[%s] %s::%d -> %s\n" __FILE__, __FUNCTION__, __LINE__, msg);)
+  printk(KERN_WARNING "[%s] %s\n", __FUNCTION__, msg);)
 
 #define _STRINGIFY(str) #str
 #define STRINGIFY(str) _STRINGIFY(str)
